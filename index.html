@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Kids - Study & Play</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f3f6ff;
+  color:#26344a;
+}
+
+header{
+  background:white;
+  padding:16px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 3px 12px #0001;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.logo{
+  color:#6555e8;
+  font-size:23px;
+  font-weight:bold;
+}
+
+.stars{
+  background:#fff0b5;
+  padding:10px 15px;
+  border-radius:25px;
+  font-weight:bold;
+}
+
+.hero{
+  background:linear-gradient(120deg,#6355ed,#a879ff);
+  color:white;
+  text-align:center;
+  padding:50px 15px;
+  border-radius:0 0 35px 35px;
+}
+
+.hero h1{
+  font-size:32px;
+  margin-bottom:12px;
+}
+
+.hero p{
+  font-size:16px;
+}
+
+.hero .emoji{
+  font-size:55px;
+  margin-top:20px;
+}
+
+.container{
+  width:92%;
+  max-width:1100px;
+  margin:30px auto;
+}
+
+.container h2{
+  margin-bottom:20px;
+}
+
+.games{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.card{
+  padding:23px 12px;
+  border-radius:20px;
+  text-align:center;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+}
+
+.card .icon{
+  font-size:48px;
+  margin-bottom:12px;
+}
+
+.card h3{
+  margin-bottom:10px;
+}
+
+.card p{
+  font-size:13px;
+  margin-bottom:15px;
+}
+
+.card button{
+  background:#6555e8;
+  color:white;
+  border:0;
+  padding:11px 17px;
+  border-radius:25px;
+  cursor:pointer;
+}
+
+.abc{background:#dff3ff;}
+.math{background:#fff0d7;}
+.animal{background:#e1f8e4;}
+.hindi{background:#ffe7f4;}
+.science{background:#e9e4ff;}
+.gk{background:#fff1dc;}
+
+.game-area{
+  background:white;
+  padding:25px 18px;
+  border-radius:22px;
+  margin-top:30px;
+  text-align:center;
+  box-shadow:0 5px 20px #0001;
+}
+
+.hidden{display:none!important;}
+
+.progress{
+  height:12px;
+  background:#eee;
+  border-radius:20px;
+  margin:20px 0;
+  overflow:hidden;
+}
+
+#progressBar{
+  height:100%;
+  width:0%;
+  background:#39c985;
+  transition:.3s;
+}
+
+#question{
+  font-size:30px;
+  font-weight:bold;
+  margin:25px 0;
+}
+
+.options{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  max-width:550px;
+  margin:auto;
+}
+
+.option{
+  padding:16px 8px;
+  background:#f3f1ff;
+  border:2px solid #ddd8ff;
+  border-radius:15px;
+  font-size:17px;
+  cursor:pointer;
+}
+
+.option:disabled{cursor:default;}
+.correct{
+  background:#c9f7d8!important;
+  border-color:#36ba69!important;
+}
+.wrong{
+  background:#ffe0e0!important;
+  border-color:#ef7777!important;
+}
+
+#feedback{
+  font-size:19px;
+  font-weight:bold;
+  margin:20px;
+}
+
+.action{
+  border:0;
+  padding:13px 23px;
+  border-radius:25px;
+  margin:7px;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.next{
+  background:#6555e8;
+  color:white;
+}
+
+.back{
+  background:#e8edf5;
+  color:#333;
+}
+
+.reward{
+  background:#fff0c4;
+  padding:25px;
+  margin-top:30px;
+  border-radius:20px;
+  text-align:center;
+  line-height:2;
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  background:white;
+  margin-top:30px;
+  color:#777;
+}
+
+@media(max-width:750px){
+  .games{grid-template-columns:repeat(2,1fr);}
+  .hero h1{font-size:26px;}
+}
+
+@media(max-width:380px){
+  .games{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🎓 Smart Kids</div>
+  <div class="stars">⭐ <span id="stars">0</span></div>
+</header>
+
+<section class="hero">
+  <h1>खेलो भी और सीखो भी! 🎉</h1>
+  <p>मस्ती के साथ पढ़ाई करने का मजेदार तरीका!</p>
+  <div class="emoji">🧒 📚 🚀</div>
+</section>
+
+<main class="container">
+
+<h2>🎮 अपना गेम चुनें</h2>
+
+<div class="games">
+
+  <div class="card abc" onclick="startGame('abc')">
+    <div class="icon">🔤</div>
+    <h3>ABC Learning</h3>
+    <p>अंग्रेजी अक्षर सीखें</p>
+    <button>Play Now ▶</button>
+  </div>
+
+  <div class="card math" onclick="startGame('math')">
+    <div class="icon">🔢</div>
+    <h3>Maths Game</h3>
+    <p>जोड़ना और घटाना</p>
+    <button>Play Now ▶</button>
+  </div>
+
+  <div class="card animal" onclick="startGame('animal')">
+    <div class="icon">🐯</div>
+    <h3>Animal Quiz</h3>
+    <p>जानवरों को पहचानें</p>
+    <button>Play Now ▶</button>
+  </div>
+
+  <div class="card hindi" onclick="startGame('hindi')">
+    <div class="icon">अ</div>
+    <h3>Hindi Learning</h3>
+    <p>हिंदी अक्षर सीखें</p>
+    <button>Play Now ▶</button>
+  </div>
+
+  <div class="card science" onclick="startGame('science')">
+    <div class="icon">🔬</div>
+    <h3>Science Quiz</h3>
+    <p>विज्ञान सीखें</p>
+    <button>Play Now ▶</button>
+  </div>
+
+  <div class="card gk" onclick="startGame('gk')">
+    <div class="icon">🌍</div>
+    <h3>General Knowledge</h3>
+    <p>नई जानकारी सीखें</p>
+    <button>Play Now ▶</button>
+  </div>
+
+</div>
+
+<section id="gameArea" class="game-area hidden">
+
+  <h2 id="gameTitle">Game</h2>
+
+  <div class="progress">
+    <div id="progressBar"></div>
+  </div>
+
+  <p id="questionNumber"></p>
+
+  <div id="question"></div>
+
+  <div id="options" class="options"></div>
+
+  <p id="feedback"></p>
+
+  <button id="nextBtn" class="action next hidden"
+  onclick="nextQuestion()">Next ➜</button>
+
+  <button class="action back" onclick="closeGame()">
+    🏠 Home
+  </button>
+
+</section>
+
+<section class="reward">
+  <h2>🏆 My Rewards</h2>
+  <p>आपके स्टार: <b id="rewardStars">0</b> ⭐</p>
+  <p id="message">चलो कुछ नया सीखते हैं!</p>
+</section>
+
+</main>
+
+<footer>
+  <p>❤️ Smart Kids - Learn • Play • Grow</p>
+</footer>
+
+<script>
+let totalStars=Number(localStorage.getItem("kidsStars"))||0;
+let currentGame="";
+let currentQuestion=0;
+let score=0;
+let answered=false;
+let questions=[];
+
+const games={
+
+abc:{
+title:"🔤 ABC Learning",
+questions:[
+{q:"A के बाद क्या आता है?",o:["B","C","D","E"],a:"B"},
+{q:"Apple किस अक्षर से शुरू होता है?",o:["A","B","C","D"],a:"A"},
+{q:"C के बाद क्या आता है?",o:["E","D","F","G"],a:"D"},
+{q:"Dog किस अक्षर से शुरू होता है?",o:["A","D","B","C"],a:"D"},
+{q:"Alphabet में कितने अक्षर हैं?",o:["20","24","26","28"],a:"26"}
+]},
+
+math:{
+title:"🔢 Maths Game",
+questions:[
+{q:"2 + 3 = ?",o:["4","5","6","7"],a:"5"},
+{q:"5 + 5 = ?",o:["8","9","10","11"],a:"10"},
+{q:"9 - 4 = ?",o:["3","4","5","6"],a:"5"},
+{q:"3 × 2 = ?",o:["5","6","7","8"],a:"6"},
+{q:"10 - 3 = ?",o:["5","6","7","8"],a:"7"}
+]},
+
+animal:{
+title:"🐯 Animal Quiz",
+questions:[
+{q:"🐶 यह कौन है?",o:["बिल्ली","कुत्ता","शेर","हाथी"],a:"कुत्ता"},
+{q:"🦁 जंगल का राजा?",o:["शेर","गाय","बकरी","घोड़ा"],a:"शेर"},
+{q:"🐘 यह कौन है?",o:["कुत्ता","बिल्ली","हाथी","बकरी"],a:"हाथी"},
+{q:"🐄 दूध कौन देता है?",o:["गाय","शेर","बंदर","कौआ"],a:"गाय"},
+{q:"🐒 पेड़ पर कौन चढ़ता है?",o:["मछली","बंदर","हाथी","ऊँट"],a:"बंदर"}
+]},
+
+hindi:{
+title:"अ हिंदी लर्निंग",
+questions:[
+{q:"अ से क्या होता है?",o:["अनार","आम","इमली","उल्लू"],a:"अनार"},
+{q:"आ से क्या होता है?",o:["कमल","आम","अनार","गमला"],a:"आम"},
+{q:"इ से क्या होता है?",o:["आम","इमली","उल्लू","कमल"],a:"इमली"},
+{q:"उ से क्या होता है?",o:["अनार","उल्लू","आम","कमल"],a:"उल्लू"},
+{q:"क से क्या होता है?",o:["कमल","आम","अनार","इमली"],a:"कमल"}
+]},
+
+science:{
+title:"🔬 Science Quiz",
+questions:[
+{q:"सूरज किस दिशा से निकलता है?",o:["पश्चिम","उत्तर","पूर्व","दक्षिण"],a:"पूर्व"},
+{q:"हम सांस किससे लेते हैं?",o:["कान","नाक","आंख","हाथ"],a:"नाक"},
+{q:"पौधे अपना भोजन कैसे बनाते हैं?",o:["प्रकाश संश्लेषण","सोना","दौड़ना","पानी पीना"],a:"प्रकाश संश्लेषण"},
+{q:"पानी का रासायनिक सूत्र?",o:["CO2","O2","H2O","N2"],a:"H2O"},
+{q:"हमारे शरीर में कितने आंखें होती हैं?",o:["एक","दो","तीन","चार"],a:"दो"}
+]},
+
+gk:{
+title:"🌍 General Knowledge",
+questions:[
+{q:"भारत की राजधानी क्या है?",o:["मुंबई","दिल्ली","जयपुर","भोपाल"],a:"दिल्ली"},
+{q:"भारत का राष्ट्रीय पशु?",o:["शेर","हाथी","बाघ","घोड़ा"],a:"बाघ"},
+{q:"एक सप्ताह में कितने दिन?",o:["5","6","7","8"],a:"7"},
+{q:"भारत का राष्ट्रीय पक्षी?",o:["तोता","मोर","कौआ","कबूतर"],a:"मोर"},
+{q:"तिरंगे में कितने मुख्य रंग हैं?",o:["2","3","4","5"],a:"3"}
+]}
+};
+
+function updateStars(){
+document.getElementById("stars").textContent=totalStars;
+document.getElementById("rewardStars").textContent=totalStars;
+localStorage.setItem("kidsStars",totalStars);
+}
+
+function startGame(type){
+currentGame=type;
+currentQuestion=0;
+score=0;
+questions=games[type].questions;
+
+document.getElementById("gameArea").classList.remove("hidden");
+document.getElementById("gameTitle").textContent=games[type].title;
+
+document.getElementById("gameArea").scrollIntoView({
+behavior:"smooth"
+});
+
+showQuestion();
+}
+
+function showQuestion(){
+answered=false;
+
+let q=questions[currentQuestion];
+
+document.getElementById("questionNumber").textContent=
+`सवाल ${currentQuestion+1} / ${questions.length}`;
+
+document.getElementById("progressBar").style.width=
+(currentQuestion/questions.length)*100+"%";
+
+document.getElementById("question").textContent=q.q;
+document.getElementById("feedback").textContent="";
+document.getElementById("nextBtn").classList.add("hidden");
+
+let box=document.getElementById("options");
+box.innerHTML="";
+
+q.o.forEach(option=>{
+let btn=document.createElement("button");
+btn.className="option";
+btn.textContent=option;
+btn.onclick=()=>checkAnswer(option,btn);
+box.appendChild(btn);
+});
+}
+
+function checkAnswer(selected,button){
+if(answered)return;
+answered=true;
+
+let q=questions[currentQuestion];
+let feedback=document.getElementById("feedback");
+
+document.querySelectorAll(".option").forEach(btn=>{
+btn.disabled=true;
+if(btn.textContent===q.a){
+btn.classList.add("correct");
+}
+});
+
+if(selected===q.a){
+score++;
+totalStars++;
+updateStars();
+
+feedback.textContent="🎉 शाबाश! सही जवाब!";
+feedback.style.color="green";
+}else{
+button.classList.add("wrong");
+feedback.textContent="😊 कोई बात नहीं! सही जवाब हरे रंग में है।";
+feedback.style.color="red";
+}
+
+let next=document.getElementById("nextBtn");
+next.classList.remove("hidden");
+next.textContent=currentQuestion===questions.length-1
+?"परिणाम देखें 🏆":"अगला सवाल ➜";
+}
+
+function nextQuestion(){
+if(!answered)return;
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+showQuestion();
+}else{
+showResult();
+}
+}
+
+function showResult(){
+document.getElementById("questionNumber").textContent="गेम पूरा हुआ!";
+document.getElementById("progressBar").style.width="100%";
+document.getElementById("question").textContent="🏆";
+
+document.getElementById("options").innerHTML=`
+<div style="grid-column:1/-1;padding:15px;">
+<h2>बहुत बढ़िया! 🎉</h2>
+<h3>आपका स्कोर: ${score}/${questions.length}</h3>
+<p>आपने ${score} सवाल सही किए!</p>
+<div style="font-size:40px;margin-top:15px;">🌟🏆🌟</div>
+</div>`;
+
+let msg=score===5
+?"वाह! आप सुपरस्टार हैं! 🌟"
+:score>=3
+?"बहुत अच्छा! ऐसे ही सीखते रहिए! 👏"
+:"कोई बात नहीं, फिर कोशिश करें! 💪";
+
+document.getElementById("feedback").textContent=msg;
+document.getElementById("message").textContent=msg;
+document.getElementById("nextBtn").classList.add("hidden");
+}
+
+function closeGame(){
+document.getElementById("gameArea").classList.add("hidden");
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+updateStars();
+</script>
+
+</body>
+</html>
